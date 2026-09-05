@@ -1,0 +1,44 @@
+# The whole loop, filmed by the tool: the repo, the storyboard, the wiring, the deployed page.
+# Every URL here was checked against demoreel's own robots guard (probes/check-robots.ts).
+# /commits/ and /deployments are NOT filmed: robots.txt disallows the first, the second 404s
+# without auth. Nothing in this storyboard claims the GitHub runner executed — it describes
+# what demo.yml does, and states that this video was filmed from the deployment.
+version: 1
+title: demoreel
+sentence: deploy, then video. the whole loop.
+url: https://github.com/Kurt-John-Kalwin/demoreel
+outro: demoreel
+outroNote: github.com/Kurt-John-Kalwin/demoreel
+voice: iP95p4xoKVk53GoZ742B
+viewport: 1920x1080
+scenes:
+  - say: This is the whole setup. One repo — the tool, the page it ships, and the file that films it.
+    do:
+      - goto: https://github.com/Kurt-John-Kalwin/demoreel
+      - scroll: 600
+  - say: That file is demoreel dot yaml. Six scenes, seventy-one words. It lives next to the code.
+    do:
+      - goto: https://github.com/Kurt-John-Kalwin/demoreel/blob/main/demoreel.yaml
+      - scroll: 350
+  - say: And this is the wiring. When a deployment succeeds, film the URL that just went live.
+    do:
+      - goto: https://github.com/Kurt-John-Kalwin/demoreel/blob/main/.github/workflows/demo.yml
+      - scroll: 350
+  - say: So here is what happens. You change the page. You push. The page deploys.
+    do:
+      - goto: https://kurt-john-kalwin.github.io/demoreel/
+  - say: And the demo gets filmed again, from the deployment that just finished.
+    do:
+      - scroll_to: '#how'
+  - say: Nobody opens a screen recorder. Nobody books a quiet room.
+    do:
+      - scroll_to: '#ci'
+  - say: The cursor you are watching is drawn from an action log. The voice is an API.
+    do:
+      - scroll_to: '#cost'
+  - say: This video was filmed from the last deployment of that page. It cost pennies.
+    do:
+      - scroll_to: '#start'
+  - say: Change the page tomorrow, and it films it again.
+    do:
+      - hover: 'a.cta'
