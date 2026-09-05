@@ -1,0 +1,95 @@
+name: Demoreel
+description: Render a narrated demo video of a preview deployment from demoreel.yaml and post it on the pull request
+author: Kurt Kalwin
+branding:
+  icon: film
+  color: red
+inputs:
+  url:
+    description: The deployment to record. Defaults to the deployment_status target URL when the workflow runs on that event.
+    required: false
+  storyboard:
+    description: Path to the storyboard file in the repo
+    required: false
+    default: demoreel.yaml
+  lang:
+    description: Narration language (BCP-47)
+    required: false
+    default: en
+  comment:
+    description: Post or update a comment on the pull request with the gif
+    required: false
+    default: "true"
+  pr:
+    description: Pull request number (defaults to the event's pull request)
+    required: false
+  version:
+    description: demoreel version to run. Any npm or git spec npx accepts.
+    required: false
+    default: "github:Kurt-John-Kalwin/demoreel"
+  solari-api-key:
+    description: Solari API key (store it as a repository secret)
+    required: true
+  elevenlabs-api-key:
+    description: ElevenLabs key for the narration voice; used ahead of openai-api-key when both are set
+    required: false
+  openai-api-key:
+    description: OpenAI key for the narration voice; without either voice key the runner narrates silence
+    required: false
+  anthropic-api-key:
+    description: Anthropic key; only needed for lang other than en (translation)
+    required: false
+  github-token:
+    description: Token used to host the gif on an assets branch and comment on the PR
+    required: false
+    default: ${{ github.token }}
+outputs:
+  mp4:
+    description: Path to the rendered mp4
+    value: ${{ steps.render.outputs.mp4 }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+    - id: target
+      shell: bash
+      run: |
+        URL="${{ inputs.url }}"
+        if [ -z "$URL" ] && [ "${{ github.event_name }}" = "deployment_status" ]; then
+          URL="${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}"
+        fi
+        if [ -z "$URL" ]; then echo "no url input and not a deployment_status event" >&2; exit 1; fi
+        echo "url=$URL" >> "$GITHUB_OUTPUT"
+        PR="${{ inputs.pr }}"
+        if [ -z "$PR" ] && [ -n "${{ github.event.pull_request.number }}" ]; then PR="${{ github.event.pull_request.number }}"; fi
+        echo "pr=$PR" >> "$GITHUB_OUTPUT"
+    - id: render
+      shell: bash
+      env:
+        SOLARI_API_KEY: ${{ inputs.solari-api-key }}
+        ELEVENLABS_API_KEY: ${{ inputs.elevenlabs-api-key }}
+        OPENAI_API_KEY: ${{ inputs.openai-api-key }}
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic-api-key }}
+        DEMOREEL_LOG: json
+      run: |
+        npx --yes ${{ inputs.version }} render "${{ inputs.storyboard }}" --url "${{ steps.target.outputs.url }}" --lang "${{ inputs.lang }}" --out demoreel-out > render.json
+        cat render.json
+        echo "mp4=$(node -e 'console.log(require("./render.json").mp4)')" >> "$GITHUB_OUTPUT"
+    - uses: actions/upload-artifact@v4
+      id: artifact
+      with:
+        name: demoreel-${{ github.run_id }}
+        path: demoreel-out
+        if-no-files-found: error
+    - if: inputs.comment == 'true' && steps.target.outputs.pr != ''
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.github-token }}
+      run: |
+        npx --yes ${{ inputs.version }} action-comment \
+          --repo "${{ github.repository }}" --pr "${{ steps.target.outputs.pr }}" \
+          --gif demoreel-out/demo.gif \
+          --artifact-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          --title "${{ steps.target.outputs.url }}"

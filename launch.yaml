@@ -1,0 +1,70 @@
+# The Demoreel launch video, cut 2: the pain first, the twist as the payoff.
+#
+# The use case is Kurt's own and it is on screen, not asserted: topsets.app's #shiplog section reads
+# "7 builds shipped / 2 days between builds / 14 improvements / 13 bugs fixed", under the line
+# "The only honest answer to that is a dated record." A demo video is the one thing on a landing page
+# that cannot be kept honest - it goes stale silently. That is what demoreel fixes.
+#
+# Geometry measured live 5 Sep 2026 at 1920x1080 (probes/geometry2.ts):
+#   #import 980 | #cockpit 8013 | h2 "Open the app" 8190 | #shiplog 15803 | #beta 19053 | h2 waitlist 19287
+# scrollIntoView lands a target a third down the viewport. Every click target is a bare <h2> with no
+# anchor, button or handler ancestor: the highlight box draws and nothing else happens. The form is never touched.
+# NOTE: topsets.app has no video on it (checked), so nothing here claims one does.
+version: 1
+title: Top Sets
+sentence: take nine. sorry.
+url: https://topsets.app/
+outro: demoreel
+outroNote: your demo video, re-rendered on every deploy.
+voice: iP95p4xoKVk53GoZ742B   # Chris - Charming, Down-to-Earth (premade; library voices need a paid tier)
+viewport: 1920x1080
+scenes:
+  # 1. The cliche open. A small hunt so the persona reads as a person at a desk.
+  - say: Hey everyone. Quick demo of Top Sets — my lifting app. One sec.
+    do:
+      - goto: https://topsets.app/
+      - scroll: 900
+      - scroll: -500
+  # 2. The one real product claim, on the best-looking section.
+  - say: You log a set, and it tells you what to lift next time. Weight, reps, all of it.
+    do:
+      - scroll_to: '#cockpit'
+      - hover: 'h2:has-text("Open the app already knowing where you stand.")'
+  # 3. The turn. Said while the page is already travelling to the evidence.
+  - say: Now — this is the bit that actually ruins my week.
+    do:
+      - scroll_to: '#shiplog'
+  # 4. The evidence, read off the page: the numbers are on screen as they are spoken.
+  - say: That's my changelog. Seven builds. Two days between them.
+    do:
+      - hover: 'h2:has-text("We ship every couple of days.")'
+  # 5. The other two numbers on the same stat row, so the evidence shot pays off twice.
+  - say: Fourteen improvements. Thirteen fixes. A demo from last month shows none of them.
+    do:
+      - scroll: 400
+  # 6. THE PAIN. "Lying" is the page's own frame - its shiplog exists because a dated record is the honest answer.
+  - say: So a demo I record today is lying to somebody by Thursday.
+    do:
+      - scroll: 500
+  # 6. THE COST, and the callback that makes the title card retroactively a lie.
+  - say: And re-recording it costs a quiet room, nine takes, an afternoon.
+    do:
+      - scroll: 500
+  # 7. THE TURN. No actions: the page stops dead. First stillness in the video, and it lands on the pivot.
+  - say: So nobody recorded this one.
+    do: []
+  # 8. THE TWIST, held in the same stillness. Three beats, each deleting something they accepted.
+  - say: There's no room. No microphone. Nobody moved that mouse. Not once.
+    do: []
+  # 9. THE FIX. Motion returns, but deliberate rather than human - the machine driving, not the founder.
+  - say: I'm a command line tool called demoreel. Your deploy runs me. The video remakes itself.
+    do:
+      - scroll_to: '#beta'
+      - hover: 'h2:has-text("Sign up for the waitlist.")'
+  # 11. The actual promise, stated plainly while the cursor sits on the CTA.
+  - say: So the demo tracks the product, not the launch date.
+    do: []
+  # 12. The closer: take ten is the machine's, and it needs nobody in the room.
+  - say: Next deploy, take ten. Nobody has to show up.
+    do:
+      - click: 'h2:has-text("Sign up for the waitlist.")'

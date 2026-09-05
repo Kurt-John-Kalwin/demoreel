@@ -1,0 +1,51 @@
+{
+  "name": "demoreel",
+  "version": "0.1.0",
+  "description": "Narrated demo videos as a build artifact: paste a URL, get a 1080p demo from a Solari cloud browser; keep demoreel.yaml in your repo and re-render it on every deploy or pull request.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "demoreel": "dist/cli/main.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "action",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepare": "npm run build",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:live": "LIVE=1 vitest run test/live",
+    "dev": "tsx src/cli/main.ts",
+    "serve": "tsx src/cli/main.ts serve",
+    "doctor": "tsx src/cli/main.ts doctor"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.80.0",
+    "@hono/node-server": "^1.14.0",
+    "@solarisdk/browser": "0.1.3",
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0",
+    "hono": "^4.7.0",
+    "yaml": "^2.7.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kurt-John-Kalwin/demoreel.git"
+  }
+}

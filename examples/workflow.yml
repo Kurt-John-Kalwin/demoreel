@@ -1,0 +1,18 @@
+# Copy to .github/workflows/demoreel.yml in a repo that has demoreel.yaml at its root.
+# Renders the storyboard against every successful Vercel preview deployment and posts the clip on the PR.
+name: demo video
+on:
+  deployment_status:
+jobs:
+  demo:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Kurt-John-Kalwin/demoreel/action@main
+        with:
+          solari-api-key: ${{ secrets.SOLARI_API_KEY }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}

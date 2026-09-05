@@ -1,0 +1,43 @@
+version: 1
+title: Top Sets
+url: https://topsets.app/
+sentence: A hypertrophy tracker that plans your next set for you.
+lang:
+  - en
+viewport: 1920x1080
+scenes:
+  - say: This is Top Sets, a hypertrophy training system that logs your sets and writes next week's
+      loads for you.
+    do:
+      - goto: https://topsets.app/
+      - scroll_to: h1:has-text("The weight,counted.")
+  - say: Bring five years of history from Strong or Hevy. Every set, every PR, every kilo comes back
+      whole, duplicates skipped.
+    do:
+      - scroll_to: "#import"
+      - hover: h2:has-text("Bring five years with you.")
+  - say: Open the Training Cockpit and see last session's verdict, weekly volume against targets, and
+      which muscles are ready to train.
+    do:
+      - scroll_to: "#cockpit"
+      - hover: h3:has-text("Muscle heat map")
+      - hover: h3:has-text("PR Lock-On")
+  - say: Log a working set one-handed. Roles like top set, back-off and drop are built in, with a rest
+      timer that coaches you back.
+    do:
+      - scroll_to: "#logging"
+      - hover: h2:has-text("Built for the set, not the spreadsheet.")
+  - say: Leave progression on Auto and Top Sets reads your reps and RPE, then writes next session's
+      loads before you get there.
+    do:
+      - scroll_to: h2:has-text("Weights that plan themselves.")
+  - say: Build a whole season in blocks, from hypertrophy to deload, with weekly set targets seeded per
+      muscle in one tap.
+    do:
+      - scroll_to: "#program"
+      - hover: h2:has-text("A whole season, planned in blocks.")
+  - say: Top Sets is in TestFlight now for iPhone. Sign up for the waitlist and we'll send the right
+      thing when it opens.
+    do:
+      - scroll_to: "#beta"
+      - hover: button:has-text("iPhone")
