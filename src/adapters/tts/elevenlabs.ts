@@ -49,8 +49,12 @@ export function voiceSettingsFromEnv(env: NodeJS.ProcessEnv = process.env): Voic
   return Object.keys(settings).length ? settings : null;
 }
 
-/** Rachel: the stock voice every account has, so the adapter works before anyone picks a voice. */
-const DEFAULT_VOICE = "21m00Tcm4TlvDq8ikWAM";
+/**
+ * Chris, a *premade* voice. Not Rachel: she has been reclassified into the Voice Library, and a free-tier
+ * key is refused outright ("Free users cannot use library voices via the API"), so the old default failed
+ * on the first render for anyone without a paid plan. Verified by synthesis on 5 Sep 2026.
+ */
+const DEFAULT_VOICE = "iP95p4xoKVk53GoZ742B";
 /** Only the v2.5 models accept language_code; multilingual_v2 rejects the field outright. */
 const TAKES_LANGUAGE_CODE = /_(turbo|flash)_v2_5$/;
 const VOICE_ID = /^[A-Za-z0-9]{20}$/;

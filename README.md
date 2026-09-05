@@ -11,7 +11,7 @@ demoreel render demoreel.yaml
 
 ## Status
 
-Verified on 3 Sep 2026 (UTC) against live Solari, with the tests green (82 offline tests, 3 s).
+Verified against live Solari, with the tests green (122 offline tests, ~5 s). The deploy-to-video loop was run end to end on 5 Sep 2026: two Pages deployments of this repo's own site, filmed from the deployment each time, same storyboard, different footage.
 
 | Piece | State | Evidence |
 |---|---|---|
