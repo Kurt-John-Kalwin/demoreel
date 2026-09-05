@@ -1,0 +1,34 @@
+# The claim this repo makes, applied to itself: every successful deployment re-renders
+# the demo video of the page that was just deployed.
+name: Demo video
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Deployment URL to film (defaults to the Pages site)
+        required: false
+      pr:
+        description: Pull request number to comment on
+        required: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  render:
+    # Only successful github-pages deployments, so this never fires on its own artefacts.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment_status.environment == 'github-pages')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./action
+        id: demo
+        with:
+          url: ${{ github.event.inputs.url || '' }}
+          pr: ${{ github.event.inputs.pr || '' }}
+          storyboard: demoreel.yaml
+          solari-api-key: ${{ secrets.SOLARI_API_KEY }}
+          elevenlabs-api-key: ${{ secrets.ELEVENLABS_API_KEY }}
