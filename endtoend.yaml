@@ -10,6 +10,7 @@ url: https://github.com/Kurt-John-Kalwin/demoreel
 outro: demoreel
 outroNote: github.com/Kurt-John-Kalwin/demoreel
 voice: iP95p4xoKVk53GoZ742B
+music: assets/beds/calm.mp3
 viewport: 1920x1080
 scenes:
   - say: This is the whole setup. One repo — the tool, the page it ships, and the file that films it.

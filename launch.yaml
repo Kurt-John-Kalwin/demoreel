@@ -17,6 +17,7 @@ url: https://topsets.app/
 outro: demoreel
 outroNote: your demo video, re-rendered on every deploy.
 voice: iP95p4xoKVk53GoZ742B   # Chris - Charming, Down-to-Earth (premade; library voices need a paid tier)
+music: assets/beds/calm.mp3
 viewport: 1920x1080
 scenes:
   # 1. The cliche open. A small hunt so the persona reads as a person at a desk.
