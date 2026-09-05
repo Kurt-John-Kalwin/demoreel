@@ -1,0 +1,30 @@
+# The storyboard the Action renders from every deployment of this repo's Pages site.
+# Kept short on purpose: it runs on every deploy, so it should cost cents and finish fast.
+version: 1
+title: demoreel
+sentence: narrated demo videos as a build artifact
+url: https://kurt-john-kalwin.github.io/demoreel/
+outro: this video was rendered by the deploy
+outroNote: nobody recorded it. demoreel.yaml, in this repo.
+voice: iP95p4xoKVk53GoZ742B
+viewport: 1920x1080
+scenes:
+  - say: This is demoreel. It films your product so that you don't have to.
+    do:
+      - goto: https://kurt-john-kalwin.github.io/demoreel/
+  - say: The pitch is on the tin. Your demo video is already out of date.
+    do:
+      - hover: 'h1'
+  - say: It voices the narration first, then drives a cloud browser to match it.
+    do:
+      - scroll_to: '#how'
+  - say: Keep one file in your repo, and it re-renders itself on every deploy.
+    do:
+      - scroll_to: '#ci'
+  - say: Which is exactly what just happened. A deploy finished, and made this.
+    do:
+      - scroll_to: '#cost'
+  - say: Two commands. That's the whole thing.
+    do:
+      - scroll_to: '#start'
+      - hover: 'a.cta'
